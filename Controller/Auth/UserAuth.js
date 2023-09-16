@@ -14,6 +14,8 @@ const Signup = async (req, res) => {
       return res.status(400).json({ message: 'Email already exists' });
     }
 
+    const username = email.split('@')[0];
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,7 +27,7 @@ const Signup = async (req, res) => {
       expiresIn:"30d",
     });
 
-    res.status(201).json({ message: 'User created successfully', token, email});
+    res.status(201).json({ message: 'User created successfully', token, email,username});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
